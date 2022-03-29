@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RedactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +19,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('redactions', App\Http\Controllers\RedactionController::class);
-Route::apiResource('tags', App\Http\Controllers\RedactionController::class);
-Route::apiResource('teachers', App\Http\Controllers\RedactionController::class);
-Route::apiResource('schools', App\Http\Controllers\RedactionController::class);
-Route::apiResource('logs', App\Http\Controllers\RedactionController::class);
-Route::apiResource('ilustrators', App\Http\Controllers\RedactionController::class);
-Route::apiResource('uses', App\Http\Controllers\RedactionController::class);
-Route::apiResource('administrators', App\Http\Controllers\RedactionController::class);
-Route::apiResource('socialMedias', App\Http\Controllers\RedactionController::class);
+Route::apiResource('redactions', RedactionController::class);
+Route::apiResource('tags', RedactionController::class);
+Route::apiResource('teachers', RedactionController::class);
+Route::apiResource('schools', RedactionController::class);
+Route::apiResource('logs', RedactionController::class);
+Route::apiResource('ilustrators', RedactionController::class);
+Route::apiResource('uses', RedactionController::class);
+Route::apiResource('administrators', RedactionController::class);
+Route::apiResource('socialMedias', RedactionController::class);
 
 Route::get('teste', RedactionController::class);

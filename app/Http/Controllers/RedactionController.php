@@ -15,8 +15,7 @@ class RedactionController extends Controller
      */
     public function index()
     {
-        $administrator = Administrator::first();
-        return $administrator->user;
+
     }
 
     /**
