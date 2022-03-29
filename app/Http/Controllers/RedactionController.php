@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Administrator;
 use App\Models\Redaction;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class RedactionController extends Controller
      */
     public function index()
     {
-        //
+        $administrator = Administrator::first();
+        return $administrator->user;
     }
 
     /**

@@ -17,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('redactions', App\Http\Controllers\RedactionController::class);
+Route::apiResource('tags', App\Http\Controllers\RedactionController::class);
+Route::apiResource('teachers', App\Http\Controllers\RedactionController::class);
+Route::apiResource('schools', App\Http\Controllers\RedactionController::class);
+Route::apiResource('logs', App\Http\Controllers\RedactionController::class);
+Route::apiResource('ilustrators', App\Http\Controllers\RedactionController::class);
+Route::apiResource('uses', App\Http\Controllers\RedactionController::class);
+Route::apiResource('administrators', App\Http\Controllers\RedactionController::class);
+Route::apiResource('socialMedias', App\Http\Controllers\RedactionController::class);
+
+Route::get('teste', RedactionController::class);
