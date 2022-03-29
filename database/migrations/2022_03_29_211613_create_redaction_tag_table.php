@@ -14,7 +14,9 @@ class CreateRedactionTagTable extends Migration
     public function up()
     {
         Schema::create('redaction_tag', function (Blueprint $table) {
-            $table->id();
+            $table->foreignId('Redaction_id');
+            $table->foreignId('tag_id');
+            $table->primary(['Redaction_id','tag_id']);
             $table->timestamps();
         });
     }

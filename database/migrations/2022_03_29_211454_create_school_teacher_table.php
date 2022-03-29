@@ -14,7 +14,9 @@ class CreateSchoolTeacherTable extends Migration
     public function up()
     {
         Schema::create('school_teacher', function (Blueprint $table) {
-            $table->id();
+            $table->foreignId('school_id')->constrained();
+            $table->foreignId('teacher_id')->constrained();
+            $table->primary(['school_id','teacher_id']);
             $table->timestamps();
         });
     }

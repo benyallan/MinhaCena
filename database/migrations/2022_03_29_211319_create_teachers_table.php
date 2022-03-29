@@ -15,6 +15,13 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('cpf');
+            $table->date('birthday');
+            $table->string('state');
+            $table->string('city');
+            $table->timestamp('unlocked_at');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

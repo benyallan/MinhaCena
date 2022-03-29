@@ -15,6 +15,11 @@ class CreateRedactionsTable extends Migration
     {
         Schema::create('redactions', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('student');
+            $table->foreignId('school_id');
+            $table->foreignId('teacher_id');
+            $table->longText('composing');
             $table->timestamps();
         });
     }
