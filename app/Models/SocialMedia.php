@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class SocialMedia extends Model
 {
     use HasFactory;
+
+    public function illustrator()
+    {
+        return $this->belongsTo(Illustrator::class);
+    }
 }

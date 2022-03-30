@@ -8,4 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Redaction extends Model
 {
     use HasFactory;
+
+    public function logs()
+    {
+        return $this->hasMany(Log::class);
+    }
+
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
+
+    public function school()
+    {
+        return $this->hasOne(School::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 }

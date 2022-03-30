@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/*
 Route::apiResource('redactions', RedactionController::class);
 Route::apiResource('tags', RedactionController::class);
 Route::apiResource('teachers', RedactionController::class);
@@ -28,5 +29,6 @@ Route::apiResource('ilustrators', RedactionController::class);
 Route::apiResource('uses', RedactionController::class);
 Route::apiResource('administrators', RedactionController::class);
 Route::apiResource('socialMedias', RedactionController::class);
+*/
+Route::get('teste', [RedactionController::class, 'index']);
 
-Route::get('teste', RedactionController::class);
