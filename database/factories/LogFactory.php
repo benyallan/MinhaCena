@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Redaction;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 class LogFactory extends Factory
 {
@@ -16,8 +17,8 @@ class LogFactory extends Factory
     {
         return [
             'redaction_id' => Redaction::factory()->create()->id,
-            'where',
-            'who'
+            'where' => $this->faker->city(),
+            'who' => $this->faker->name(),
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Administrator;
+
 use App\Models\Redaction;
 use Illuminate\Http\Request;
 
@@ -15,7 +15,7 @@ class RedactionController extends Controller
      */
     public function index()
     {
-        return Administrator::all();
+        return Redaction::all();
     }
 
     /**

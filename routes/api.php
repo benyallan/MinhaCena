@@ -27,8 +27,8 @@ Route::apiResource('schools', RedactionController::class);
 Route::apiResource('logs', RedactionController::class);
 Route::apiResource('ilustrators', RedactionController::class);
 Route::apiResource('uses', RedactionController::class);
-Route::apiResource('administrators', RedactionController::class);
+Route::apiResource('administrators', AdministratorController::class);
 Route::apiResource('socialMedias', RedactionController::class);
 */
-Route::get('teste', [RedactionController::class, 'index']);
+//Route::get('teste', [RedactionController::class, 'index']);
 

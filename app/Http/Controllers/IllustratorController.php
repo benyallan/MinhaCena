@@ -14,7 +14,7 @@ class IllustratorController extends Controller
      */
     public function index()
     {
-        //
+        return Illustrator::all();
     }
 
     /**

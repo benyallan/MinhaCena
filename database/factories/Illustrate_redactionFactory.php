@@ -16,7 +16,7 @@ class illustrate_redactionFactory extends Factory
     public function definition()
     {
         return [
-            'redaction_id' => $this->faker->randomDigit(),//Redaction::factory()->create()->id,
+            'redaction_id' => Redaction::factory()->create()->id,
             'illustrator_id' => Illustrator::factory()->create()->id,
             'delivered_at' => $this->faker->date('d_m_Y'),
             'illustration' => $this->faker->url(),
