@@ -15,6 +15,7 @@ class CreateIllustratorsTable extends Migration
     {
         Schema::create('illustrators', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('name');
             $table->string('cpf');
             $table->date('birthday');
@@ -22,7 +23,6 @@ class CreateIllustratorsTable extends Migration
             $table->string('city');
             $table->string('portfolio');
             $table->timestamp('unlocked_at')->nullable();
-            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

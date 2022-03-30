@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\School;
+use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RedactionFactory extends Factory
@@ -14,7 +16,11 @@ class RedactionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->sentences(),
+            'student' => $this->faker->name(),
+            'school_id' => School::factory(),
+            'teacher_id' => Teacher::factory(),
+            'composing' => $this->faker->paragraphs()
         ];
     }
 }

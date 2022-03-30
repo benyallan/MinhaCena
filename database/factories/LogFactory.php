@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Redaction;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LogFactory extends Factory
@@ -14,7 +15,9 @@ class LogFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'redaction_id' => Redaction::factory()->create()->id,
+            'where',
+            'who'
         ];
     }
 }

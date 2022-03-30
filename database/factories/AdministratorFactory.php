@@ -15,12 +15,12 @@ class AdministratorFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => User::factory()->create(['user_type' => 'Administrator'])->id,
             'name' => $this->faker->name(),
             'cpf' => $this->faker->unique()->cpf(false),
             'birthday' => $this->faker->date('d_m_Y'),
             'state' => $this->faker->state(),
-            'city' => $this->faker->city(),
-            'user_id' => User::factory()->create(['user_type' => 'administrator'])->id
+            'city' => $this->faker->city()
         ];
     }
 }

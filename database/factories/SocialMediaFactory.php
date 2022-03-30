@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Illustrator;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SocialMediaFactory extends Factory
@@ -14,7 +15,9 @@ class SocialMediaFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->word(),
+            'urlAddress' => $this->faker->url(),
+            'illustrator_id' => Illustrator::factory()
         ];
     }
 }
