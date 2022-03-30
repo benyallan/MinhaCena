@@ -17,7 +17,7 @@ class SocialMediaFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'urlAddress' => $this->faker->url(),
-            'illustrator_id' => Illustrator::factory()
+            'illustrator_id' => Illustrator::factory()->create()->id
         ];
     }
 }

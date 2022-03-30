@@ -17,7 +17,7 @@ class TagFactory extends Factory
         return [
             //
             'tag' => $this->faker->word(),
-            'administrator_id'=> Administrator::factory()
+            'administrator_id' => Administrator::factory()->create()->id
         ];
     }
 }

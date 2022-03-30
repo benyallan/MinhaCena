@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRedactionTagTable extends Migration
+class IllustrateRedaction extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateRedactionTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('redaction_tag', function (Blueprint $table) {
+        Schema::create('illustrate_redactions', function (Blueprint $table) {
             $table->foreignId('redaction_id');
-            $table->foreignId('tag_id');
-            $table->primary(['redaction_id','tag_id']);
+            $table->foreignId('illustrator_id');
+            $table->timestamp('delivered_at');
+            $table->string('illustration');
+            $table->timestamp('unlocked_at');
+            $table->primary(['redaction_id','illustrator_id']);
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateRedactionTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('redaction_tag');
+        Schema::dropIfExists('illustrationRedaction');
     }
 }

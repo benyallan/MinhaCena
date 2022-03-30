@@ -17,7 +17,7 @@ class RedactionFactory extends Factory
     {
         return [
             'title' => $this->faker->sentences(),
-            'student' => $this->faker->name(),
+            'student' => $this->faker->firstName(),
             'school_id' => School::factory(),
             'teacher_id' => Teacher::factory(),
             'composing' => $this->faker->paragraphs()
