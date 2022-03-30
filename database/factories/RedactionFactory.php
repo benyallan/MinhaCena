@@ -16,11 +16,11 @@ class RedactionFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentences(),
+            'title' => $this->faker->sentence(),
             'student' => $this->faker->firstName(),
-            'school_id' => School::factory(),
-            'teacher_id' => Teacher::factory(),
-            'composing' => $this->faker->paragraphs()
+            'school_id' => School::factory()->create()->id,
+            'teacher_id' => Teacher::factory()->create()->id,
+            'composing' => $this->faker->paragraph()
         ];
     }
 }
