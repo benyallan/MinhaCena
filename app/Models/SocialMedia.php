@@ -9,6 +9,16 @@ class SocialMedia extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'urlAddress',
+    ];
+
     public function illustrator()
     {
         return $this->belongsTo(Illustrator::class);

@@ -34,7 +34,7 @@ Route::apiResource('logs', LogController::class);
 Route::apiResource('ilustrators', IllustratorController::class);
 //Route::apiResource('users', RedactionController::class);
 Route::apiResource('administrators', AdministratorController::class);
-Route::apiResource('socialMedias', SocialMediaController::class);
+//Route::apiResource('socialMedias', SocialMediaController::class);
 
-//Route::get('teste', [RedactionController::class, 'index']);
+Route::post('socialMedias/{illustrator}', [SocialMediaController::class, 'store']);
 

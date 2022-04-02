@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Illustrator;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
 
@@ -23,9 +24,15 @@ class SocialMediaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $illustrator)
     {
-        //
+        $illustrator = Illustrator::find($illustrator);
+        if (is_null($illustrator)) {
+            return json_encode('Ilustrador não encontrado!');
+        }
+        $socialMedia = new SocialMedia($request->all());
+        $illustrator->socialMedias()->save($socialMedia);
+        return $illustrator->socialMedias;
     }
 
     /**

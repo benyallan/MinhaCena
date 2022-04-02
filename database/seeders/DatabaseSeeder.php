@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         *\App\Models\Redaction::factory(5)->create();
         */
 
-        \App\Models\Illustrate_redaction::factory(5)->create();
+        // \App\Models\Illustrate_redaction::factory(5)->create();
         \App\Models\SocialMedia::factory(5)->create();
         \App\Models\Tag::factory(5)->create();
         \App\Models\Log::factory(5)->create();
