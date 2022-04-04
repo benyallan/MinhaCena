@@ -31,10 +31,10 @@ Route::apiResource('tags', TagController::class);
 Route::apiResource('teachers', TeacherController::class);
 Route::apiResource('schools', SchoolController::class);
 Route::apiResource('logs', LogController::class);
-Route::apiResource('ilustrators', IllustratorController::class);
+Route::apiResource('illustrators', IllustratorController::class);
+Route::get('illustrators/{illustrator}/socialmedias', [IllustratorController::class, 'socialMedias']);
+
 //Route::apiResource('users', RedactionController::class);
 Route::apiResource('administrators', AdministratorController::class);
-//Route::apiResource('socialMedias', SocialMediaController::class);
-
-Route::post('socialMedias/{illustrator}', [SocialMediaController::class, 'store']);
+Route::apiResource('socialMedias', SocialMediaController::class);
 

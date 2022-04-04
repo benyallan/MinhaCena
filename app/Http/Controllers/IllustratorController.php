@@ -25,7 +25,7 @@ class IllustratorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Illustrator::create($request->all());
     }
 
     /**
@@ -34,9 +34,13 @@ class IllustratorController extends Controller
      * @param  \App\Models\Illustrator  $illustrator
      * @return \Illuminate\Http\Response
      */
-    public function show(Illustrator $illustrator)
+    public function show($illustrator)
     {
-        //
+        $illustrator = Illustrator::find($illustrator);
+        if (is_null($illustrator)) {
+            return json_encode('Ilustrador não existe!');
+        }
+        return $illustrator;
     }
 
     /**
@@ -48,7 +52,12 @@ class IllustratorController extends Controller
      */
     public function update(Request $request, Illustrator $illustrator)
     {
-        //
+        $illustrator = Illustrator::find($illustrator);
+        if (is_null($illustrator)) {
+            return json_encode('Ilustrador não existe!');
+        }
+        $illustrator->update($request->all());
+        return $illustrator;
     }
 
     /**
@@ -57,8 +66,30 @@ class IllustratorController extends Controller
      * @param  \App\Models\Illustrator  $illustrator
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Illustrator $illustrator)
+    public function destroy($illustrator)
     {
-        //
+        $illustrator = Illustrator::find($illustrator);
+        if (is_null($illustrator)) {
+            return json_encode('Ilustrador não existe!');
+        }
+        $illustrator->delete();
+        return json_encode('Ilustador apagado!');
     }
+
+    /**
+     * .
+     *
+     * @param  \App\Models\Illustrator  $illustrator
+     * @return \Illuminate\Http\Response
+     */
+    public function socialMedias($illustrator)
+    {
+        $illustrator = Illustrator::find($illustrator);
+        if (is_null($illustrator)) {
+            return json_encode('Ilustrador não existe!');
+        }
+        return $illustrator->socialMedias;
+    }
+
+
 }

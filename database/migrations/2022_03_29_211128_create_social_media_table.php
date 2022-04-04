@@ -17,7 +17,8 @@ class CreateSocialMediaTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('urlAddress');
-            $table->foreignId('illustrator_id');
+            $table->foreignId('illustrator_id')
+                ->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

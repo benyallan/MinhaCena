@@ -24,15 +24,16 @@ class SocialMediaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $illustrator)
+    public function store(Request $request)
     {
-        $illustrator = Illustrator::find($illustrator);
+        $dados = $request->all();
+        $illustrator = Illustrator::find($dados['illustrator_id']);
         if (is_null($illustrator)) {
             return json_encode('Ilustrador não encontrado!');
         }
         $socialMedia = new SocialMedia($request->all());
         $illustrator->socialMedias()->save($socialMedia);
-        return $illustrator->socialMedias;
+        return $socialMedia;
     }
 
     /**
@@ -41,9 +42,13 @@ class SocialMediaController extends Controller
      * @param  \App\Models\SocialMedia  $socialMedia
      * @return \Illuminate\Http\Response
      */
-    public function show(SocialMedia $socialMedia)
+    public function show($socialMedia)
     {
-        //
+        $socialMedia = SocialMedia::find($socialMedia);
+        if (is_null($socialMedia)) {
+            return json_encode('Mídia Social não existe!');
+        }
+        return SocialMedia::find($socialMedia);
     }
 
     /**
@@ -53,9 +58,16 @@ class SocialMediaController extends Controller
      * @param  \App\Models\SocialMedia  $socialMedia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SocialMedia $socialMedia)
+    public function update(Request $request, $socialMedia)
     {
-        //
+        $socialMedia = SocialMedia::find($socialMedia);
+        if (is_null($socialMedia)) {
+            return json_encode('Mídia Social não existe!');
+        }
+        $dados = $request->all();
+        $socialMedia->illustrator_id = $dados['illustrator_id'];
+        $socialMedia->update($dados);
+        return $socialMedia;
     }
 
     /**
@@ -64,8 +76,13 @@ class SocialMediaController extends Controller
      * @param  \App\Models\SocialMedia  $socialMedia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SocialMedia $socialMedia)
+    public function destroy($socialMedia)
     {
-        //
+        $socialMedia = SocialMedia::find($socialMedia);
+        if (is_null($socialMedia)) {
+            return json_encode('Mídia Social não existe!');
+        }
+        $socialMedia->delete();
+        return json_encode('Mídia Social apagada!');
     }
 }

@@ -13,4 +13,9 @@ class Illustrator extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function socialMedias()
+    {
+        return $this->hasMany(SocialMedia::class);
+    }
 }
