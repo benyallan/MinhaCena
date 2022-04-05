@@ -15,7 +15,8 @@ class CreateIllustratorsTable extends Migration
     {
         Schema::create('illustrators', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')
+                ->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('cpf');
             $table->date('birthday');

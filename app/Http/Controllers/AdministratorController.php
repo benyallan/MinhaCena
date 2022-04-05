@@ -75,4 +75,6 @@ class AdministratorController extends Controller
         $administrator->delete();
         return json_encode('Administrador apagado!');
     }
+
+
 }

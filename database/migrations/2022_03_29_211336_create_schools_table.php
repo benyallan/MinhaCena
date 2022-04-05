@@ -15,7 +15,8 @@ class CreateSchoolsTable extends Migration
     {
         Schema::create('schools', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')
+                ->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('contactPerson');
             $table->string('type');
