@@ -9,6 +9,14 @@ class Log extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'cpf',
+        'birthday',
+        'state',
+        'city',
+    ];
+
     public function redaction()
     {
         return $this->belongsTo(Redaction::class);

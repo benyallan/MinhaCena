@@ -9,6 +9,14 @@ class Illustrator extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'cpf',
+        'birthday',
+        'state',
+        'city',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
