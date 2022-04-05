@@ -25,7 +25,7 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Tag::create($request->all());
     }
 
     /**
@@ -36,7 +36,11 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
+        $tag = Tag::find($tag);
+        if (is_null($tag)) {
+            return json_encode('Tag não existe!');
+        }
+        return $tag;
     }
 
     /**
@@ -48,7 +52,12 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $tag = Tag::find($tag);
+        if (is_null($tag)) {
+            return json_encode('Tag não existe!');
+        }
+        $tag->update($tag->all());
+        return $tag;
     }
 
     /**
@@ -59,6 +68,11 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag = Tag::find($tag);
+        if (is_null($tag)) {
+            return json_encode('Tag não existe!');
+        }
+        $tag->delete();
+        return json_encode('Tag apagado!');
     }
 }

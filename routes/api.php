@@ -35,6 +35,7 @@ Route::apiResource('illustrators', IllustratorController::class);
 Route::get('illustrators/{illustrator}/socialmedias', [IllustratorController::class, 'socialMedias']);
 
 //Route::apiResource('users', RedactionController::class);
+
 Route::apiResource('administrators', AdministratorController::class);
 Route::apiResource('socialMedias', SocialMediaController::class);
 

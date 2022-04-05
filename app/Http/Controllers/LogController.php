@@ -25,7 +25,7 @@ class LogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Log::create($request->all());
     }
 
     /**
@@ -36,7 +36,11 @@ class LogController extends Controller
      */
     public function show(Log $log)
     {
-        //
+        $log = Log::find($log);
+        if (is_null($log)) {
+            return json_encode('Log não existe!');
+        }
+        return $log;
     }
 
     /**
@@ -48,7 +52,12 @@ class LogController extends Controller
      */
     public function update(Request $request, Log $log)
     {
-        //
+        $log = Log::find($log);
+        if (is_null($log)) {
+            return json_encode('Log não existe!');
+        }
+        $log->update($request->all());
+        return $log;
     }
 
     /**
@@ -59,6 +68,11 @@ class LogController extends Controller
      */
     public function destroy(Log $log)
     {
-        //
+        $log = Log::find($log);
+        if (is_null($log)) {
+            return json_encode('Log não existe!');
+        }
+        $log->delete();
+        return json_encode('Log apagado!');
     }
 }

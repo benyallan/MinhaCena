@@ -25,7 +25,7 @@ class AdministratorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Administrator::create($request->all());
     }
 
     /**
@@ -36,7 +36,11 @@ class AdministratorController extends Controller
      */
     public function show(Administrator $administrator)
     {
-        //
+        $administrator = Administrator::find($administrator);
+        if (is_null($administrator)) {
+            return json_encode('Administrador não existe!');
+        }
+        return $administrator;
     }
 
     /**
@@ -48,7 +52,12 @@ class AdministratorController extends Controller
      */
     public function update(Request $request, Administrator $administrator)
     {
-        //
+        $administrator = Administrator::find($administrator);
+        if (is_null($administrator)) {
+            return json_encode('Adminstrador não existe!');
+        }
+        $administrator->update($request->all());
+        return $administrator;
     }
 
     /**
@@ -59,6 +68,11 @@ class AdministratorController extends Controller
      */
     public function destroy(Administrator $administrator)
     {
-        //
+        $administrator = Administrator::find($administrator);
+        if (is_null($administrator)) {
+            return json_encode('Administrador não existe!');
+        }
+        $administrator->delete();
+        return json_encode('Administrador apagado!');
     }
 }

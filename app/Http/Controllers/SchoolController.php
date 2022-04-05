@@ -25,7 +25,7 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return School::create($request->all());
     }
 
     /**
@@ -36,7 +36,11 @@ class SchoolController extends Controller
      */
     public function show(School $school)
     {
-        //
+        $school = School::find($school);
+        if (is_null($school)) {
+            return json_encode('Escola não existe!');
+        }
+        return $school;
     }
 
     /**
@@ -48,7 +52,12 @@ class SchoolController extends Controller
      */
     public function update(Request $request, School $school)
     {
-        //
+        $school = School::find($school);
+        if (is_null($school)) {
+            return json_encode('Escola não existe!');
+        }
+        $school->update($request->all());
+        return $school;
     }
 
     /**
@@ -59,6 +68,11 @@ class SchoolController extends Controller
      */
     public function destroy(School $school)
     {
-        //
+        $school = School::find($school);
+        if (is_null($school)) {
+            return json_encode('Escola não existe!');
+        }
+        $school->delete();
+        return json_encode('Escola apagado!');
     }
 }

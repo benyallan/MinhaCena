@@ -25,7 +25,7 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Teacher::create($request->all());
     }
 
     /**
@@ -36,7 +36,11 @@ class TeacherController extends Controller
      */
     public function show(Teacher $teacher)
     {
-        //
+        $teacher = Teacher::find($teacher);
+        if (is_null($teacher)) {
+            return json_encode('Professor não existe!');
+        }
+        return $teacher;
     }
 
     /**
@@ -48,7 +52,12 @@ class TeacherController extends Controller
      */
     public function update(Request $request, Teacher $teacher)
     {
-        //
+        $illusteachertrator = Teacher::find($teacher);
+        if (is_null($teacher)) {
+            return json_encode('Professor não existe!');
+        }
+        $teacher->update($request->all());
+        return $teacher;
     }
 
     /**
@@ -59,6 +68,11 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        //
+        $teacher = Teacher::find($teacher);
+        if (is_null($teacher)) {
+            return json_encode('Professor não existe!');
+        }
+        $teacher->delete();
+        return json_encode('Professor apagado!');
     }
 }
