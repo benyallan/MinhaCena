@@ -17,8 +17,10 @@ class CreateRedactionsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('student');
-            $table->foreignId('school_id')->constrained()->nullOnDelete();
-            $table->foreignId('teacher_id')->constrained()->nullOnDelete();
+            $table->foreignId('school_id')
+                ->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('teacher_id')
+                ->nullable()->constrained()->nullOnDelete();
             $table->longText('composing');
             $table->timestamps();
         });

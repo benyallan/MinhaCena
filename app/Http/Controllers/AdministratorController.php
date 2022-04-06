@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\User as UserResource;
+use App\Http\Resources\Administrator as AdministratorResource;
 use App\Models\Administrator;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdministratorController extends Controller
@@ -25,7 +28,13 @@ class AdministratorController extends Controller
      */
     public function store(Request $request)
     {
-        return Administrator::create($request->all());
+        $dados = $request->all();
+        $user = new User();
+        $dados['user_type'] = 'Administrator';
+        $user = $user->create($dados);
+        $dados['user_id'] = $user->id;
+        $administrator = Administrator::create($dados);
+        return new AdministratorResource($administrator);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -66,13 +67,18 @@ class TeacherController extends Controller
      * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teacher $teacher)
+    public function destroy($teacher)
     {
-        $teacher = Teacher::find($teacher);
+        //$teacher = Teacher::find($teacher);
+        /*
         if (is_null($teacher)) {
             return json_encode('Professor não existe!');
         }
-        $teacher->delete();
+        */
+        dd($teacher);
+        $user = User::find($teacher->user_id);
+        //dd($user);
+        $user->delete();
         return json_encode('Professor apagado!');
     }
 }

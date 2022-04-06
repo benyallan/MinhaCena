@@ -15,6 +15,7 @@ class Administrator extends Model
         'birthday',
         'state',
         'city',
+        'user_id',
     ];
 
     public function user()
