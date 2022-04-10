@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Illustrator;
+use App\Http\Resources\Illustrator as IllustratorResource;
+use App\Http\Resources\SocialMedias as SocialMediasResource;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class IllustratorController extends Controller
 {
@@ -14,7 +18,7 @@ class IllustratorController extends Controller
      */
     public function index()
     {
-        return Illustrator::all();
+        return IllustratorResource::collection(Illustrator::all());
     }
 
     /**
@@ -25,7 +29,13 @@ class IllustratorController extends Controller
      */
     public function store(Request $request)
     {
-        return Illustrator::create($request->all());
+        $dados = $request->all();
+        $user = User::create($dados);
+        $dados['user_id'] = $user->id;
+        $user->user_type = 'Illustrator';
+        $illustrator = Illustrator::create($dados);
+        $illustrator->save();
+        return new IllustratorResource($illustrator);
     }
 
     /**
@@ -40,7 +50,7 @@ class IllustratorController extends Controller
         if (is_null($illustrator)) {
             return json_encode('Ilustrador não existe!');
         }
-        return $illustrator;
+        return new IllustratorResource($illustrator);
     }
 
     /**
@@ -50,14 +60,22 @@ class IllustratorController extends Controller
      * @param  \App\Models\Illustrator  $illustrator
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Illustrator $illustrator)
+    public function update(Request $request, $illustrator)
     {
         $illustrator = Illustrator::find($illustrator);
         if (is_null($illustrator)) {
             return json_encode('Ilustrador não existe!');
         }
         $illustrator->update($request->all());
-        return $illustrator;
+        if (Arr::exists($request->all(), 'email')) {
+            $illustrator->user()
+                ->update(['email' => Arr::get($request->all(), 'email')]);
+        }
+        if (Arr::exists($request->all(), 'password')) {
+            $illustrator->user()
+            ->update(['password' => Arr::get($request->all(), 'password')]);
+        }
+        return new IllustratorResource($illustrator);
     }
 
     /**
@@ -88,7 +106,7 @@ class IllustratorController extends Controller
         if (is_null($illustrator)) {
             return json_encode('Ilustrador não existe!');
         }
-        return $illustrator->socialMedias;
+        return SocialMediasResource::collection($illustrator->socialMedias);
     }
 
 

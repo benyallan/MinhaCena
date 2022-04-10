@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Administrator as AdministratorResource;
 use App\Models\Administrator;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -32,7 +31,7 @@ class AdministratorController extends Controller
         $dados = $request->all();
         $administrator = Administrator::create($dados);
         $user = User::create($dados);
-        $user->user_type = 'Administrador';
+        $user->user_type = 'Administrator';
         $administrator->user_id = $user->id;
         $administrator->save();
         return new AdministratorResource($administrator);
@@ -68,10 +67,12 @@ class AdministratorController extends Controller
         }
         $administrator->update($request->all());
         if (Arr::exists($request->all(), 'email')) {
-            $administrator->user()->update($request->all());
+            $administrator->user()
+                ->update(['email' => Arr::get($request->all(), 'email')]);
         }
         if (Arr::exists($request->all(), 'password')) {
-            $administrator->user()->update($request->all());
+            $administrator->user()
+            ->update(['password' => Arr::get($request->all(), 'password')]);
         }
         return new AdministratorResource($administrator);
     }

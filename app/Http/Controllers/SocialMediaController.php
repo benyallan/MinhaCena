@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Illustrator;
 use App\Models\SocialMedia;
+use App\Http\Resources\SocialMedias as SocialMediasResource;
 use Illuminate\Http\Request;
 
 class SocialMediaController extends Controller
@@ -15,7 +16,7 @@ class SocialMediaController extends Controller
      */
     public function index()
     {
-        return SocialMedia::all();
+        return SocialMediasResource::collection(SocialMedia::all());
     }
 
     /**
@@ -33,7 +34,7 @@ class SocialMediaController extends Controller
         }
         $socialMedia = new SocialMedia($request->all());
         $illustrator->socialMedias()->save($socialMedia);
-        return $socialMedia;
+        return new SocialMediasResource($socialMedia);
     }
 
     /**
@@ -48,7 +49,7 @@ class SocialMediaController extends Controller
         if (is_null($socialMedia)) {
             return json_encode('Mídia Social não existe!');
         }
-        return SocialMedia::find($socialMedia);
+        return new SocialMediasResource($socialMedia);
     }
 
     /**
@@ -65,9 +66,8 @@ class SocialMediaController extends Controller
             return json_encode('Mídia Social não existe!');
         }
         $dados = $request->all();
-        $socialMedia->illustrator_id = $dados['illustrator_id'];
         $socialMedia->update($dados);
-        return $socialMedia;
+        return new SocialMediasResource($socialMedia);
     }
 
     /**

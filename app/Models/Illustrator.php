@@ -15,6 +15,8 @@ class Illustrator extends Model
         'birthday',
         'state',
         'city',
+        'user_id',
+        'portfolio',
     ];
 
     public function user()
