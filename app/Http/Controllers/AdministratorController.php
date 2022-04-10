@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Administrator as AdministratorResource;
 use App\Models\Administrator;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class AdministratorController extends Controller
 {
@@ -17,7 +18,7 @@ class AdministratorController extends Controller
      */
     public function index()
     {
-        return Administrator::all();
+        return AdministratorResource::collection(Administrator::all());
     }
 
     /**
@@ -29,11 +30,11 @@ class AdministratorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $user = new User();
-        $dados['user_type'] = 'Administrator';
-        $user = $user->create($dados);
-        $dados['user_id'] = $user->id;
         $administrator = Administrator::create($dados);
+        $user = User::create($dados);
+        $user->user_type = 'Administrador';
+        $administrator->user_id = $user->id;
+        $administrator->save();
         return new AdministratorResource($administrator);
     }
 
@@ -43,13 +44,13 @@ class AdministratorController extends Controller
      * @param  \App\Models\Administrator  $administrator
      * @return \Illuminate\Http\Response
      */
-    public function show(Administrator $administrator)
+    public function show($administrator)
     {
         $administrator = Administrator::find($administrator);
         if (is_null($administrator)) {
             return json_encode('Administrador não existe!');
         }
-        return $administrator;
+        return new AdministratorResource($administrator);
     }
 
     /**
@@ -59,14 +60,20 @@ class AdministratorController extends Controller
      * @param  \App\Models\Administrator  $administrator
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Administrator $administrator)
+    public function update(Request $request, $administrator)
     {
         $administrator = Administrator::find($administrator);
         if (is_null($administrator)) {
             return json_encode('Adminstrador não existe!');
         }
         $administrator->update($request->all());
-        return $administrator;
+        if (Arr::exists($request->all(), 'email')) {
+            $administrator->user()->update($request->all());
+        }
+        if (Arr::exists($request->all(), 'password')) {
+            $administrator->user()->update($request->all());
+        }
+        return new AdministratorResource($administrator);
     }
 
     /**
@@ -75,7 +82,7 @@ class AdministratorController extends Controller
      * @param  \App\Models\Administrator  $administrator
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Administrator $administrator)
+    public function destroy($administrator)
     {
         $administrator = Administrator::find($administrator);
         if (is_null($administrator)) {

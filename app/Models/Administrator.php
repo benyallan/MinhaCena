@@ -22,4 +22,6 @@ class Administrator extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    
 }

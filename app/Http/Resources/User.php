@@ -6,6 +6,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class User extends JsonResource
 {
+        /**
+     * The "data" wrapper that should be applied.
+     *
+     * @var string
+     */
+    public static $wrap = 'usuário';
+
     /**
      * Transform the resource into an array.
      *
@@ -17,6 +24,7 @@ class User extends JsonResource
         return [
             'id' => $this->id,
             'email' => $this->email,
+            'lastAccess' => $this->lastAccess,
         ];
     }
 }

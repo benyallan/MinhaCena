@@ -9,6 +9,17 @@ class IllustrateRedaction extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'delivered_at',
+        'illustration',
+        'unlocked_at',
+    ];
+
     public function illustrations()
     {
         return $this->belongsTo(Redaction::class);

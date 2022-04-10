@@ -16,10 +16,10 @@ class CreateAdministratorsTable extends Migration
         Schema::create('administrators', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->constrained()->onDelete('cascade');
+                ->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('cpf');
-            $table->date('birthday');
+            $table->timestamp('birthday');
             $table->string('state');
             $table->string('city');
             $table->timestamps();

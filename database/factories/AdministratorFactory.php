@@ -18,7 +18,7 @@ class AdministratorFactory extends Factory
             'user_id' => User::factory()->create(['user_type' => 'Administrator'])->id,
             'name' => $this->faker->name(),
             'cpf' => $this->faker->unique()->cpf(false),
-            'birthday' => $this->faker->date('d_m_Y'),
+            'birthday' => $this->faker->date(),
             'state' => $this->faker->state(),
             'city' => $this->faker->city()
         ];

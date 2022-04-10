@@ -10,11 +10,9 @@ class Log extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'cpf',
-        'birthday',
-        'state',
-        'city',
+        'redaction_id',
+        'where',
+        'who',
     ];
 
     public function redaction()
