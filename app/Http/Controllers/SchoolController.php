@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\School;
+use App\Http\Resources\School as SchoolResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class SchoolController extends Controller
 {
@@ -14,7 +16,7 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        return School::all();
+        return SchoolResource::collection(School::all());
     }
 
     /**
@@ -25,7 +27,8 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
-        return School::create($request->all());
+        $school = School::create($request->all());
+        return new SchoolResource($school);
     }
 
     /**
@@ -34,13 +37,13 @@ class SchoolController extends Controller
      * @param  \App\Models\School  $school
      * @return \Illuminate\Http\Response
      */
-    public function show(School $school)
+    public function show($school)
     {
         $school = School::find($school);
         if (is_null($school)) {
             return json_encode('Escola não existe!');
         }
-        return $school;
+        return new SchoolResource($school);
     }
 
     /**
@@ -50,14 +53,22 @@ class SchoolController extends Controller
      * @param  \App\Models\School  $school
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, School $school)
+    public function update(Request $request, $school)
     {
         $school = School::find($school);
         if (is_null($school)) {
             return json_encode('Escola não existe!');
         }
         $school->update($request->all());
-        return $school;
+        if (Arr::exists($request->all(), 'email')) {
+            $school->user()
+                ->update(['email' => Arr::get($request->all(), 'email')]);
+        }
+        if (Arr::exists($request->all(), 'password')) {
+            $school->user()
+            ->update(['password' => Arr::get($request->all(), 'password')]);
+        }
+        return new SchoolResource($school);
     }
 
     /**
@@ -73,6 +84,6 @@ class SchoolController extends Controller
             return json_encode('Escola não existe!');
         }
         $school->delete();
-        return json_encode('Escola apagado!');
+        return json_encode('Escola apagada!');
     }
 }

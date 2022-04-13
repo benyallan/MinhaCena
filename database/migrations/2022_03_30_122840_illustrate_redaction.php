@@ -14,11 +14,10 @@ class IllustrateRedaction extends Migration
     public function up()
     {
         Schema::create('illustrate_redactions', function (Blueprint $table) {
-            $table->foreignId('redaction_id');
-            $table->foreignId('illustrator_id');
-            $table->timestamp('delivered_at');
-            $table->string('illustration');
-            $table->timestamp('unlocked_at');
+            $table->foreignId('redaction_id')->constrained();
+            $table->foreignId('illustrator_id')->constrained();
+            $table->timestamp('delivered_at')->nullable();
+            $table->string('illustration')->nullable();
             $table->primary(['redaction_id','illustrator_id']);
             $table->timestamps();
         });

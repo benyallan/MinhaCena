@@ -14,18 +14,19 @@ class School extends Model
         'name',
         'contactPerson',
         'type',
+        'street',
+        'number',
         'state',
         'city',
-        'unlocked_at',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->morphOne(User::class, 'data');
     }
 
     public function teachers()
     {
-        return $this->belongsToMany(Teacher::class);
+        return $this->hasMany(Teacher::class);
     }
 }

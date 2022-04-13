@@ -15,17 +15,12 @@ class Illustrator extends Model
         'birthday',
         'state',
         'city',
-        'user_id',
         'portfolio',
+        'socialMedias',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function socialMedias()
-    {
-        return $this->hasMany(SocialMedia::class);
+        return $this->morphOne(User::class, 'data');
     }
 }

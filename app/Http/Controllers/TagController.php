@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use App\Http\Resources\Tag as TagResource;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -14,7 +15,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        return Tag::all();
+        return TagResource::collection(Tag::all());
     }
 
     /**
@@ -25,7 +26,7 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        return Tag::create($request->all());
+        return new TagResource(Tag::create($request->all()));
     }
 
     /**
@@ -34,13 +35,13 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show($tag)
     {
         $tag = Tag::find($tag);
         if (is_null($tag)) {
             return json_encode('Tag não existe!');
         }
-        return $tag;
+        return new TagResource($tag);
     }
 
     /**
@@ -57,7 +58,7 @@ class TagController extends Controller
             return json_encode('Tag não existe!');
         }
         $tag->update($tag->all());
-        return $tag;
+        return new TagResource($tag);
     }
 
     /**
@@ -73,6 +74,6 @@ class TagController extends Controller
             return json_encode('Tag não existe!');
         }
         $tag->delete();
-        return json_encode('Tag apagado!');
+        return json_encode('Tag apagada!');
     }
 }

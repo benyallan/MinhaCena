@@ -9,6 +9,14 @@ class Redaction extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'student',
+        'school_id',
+        'teacher_id',
+        'composing',
+    ];
+
     public function logs()
     {
         return $this->hasMany(Log::class);
@@ -26,6 +34,6 @@ class Redaction extends Model
 
     public function tags()
     {
-        return $this->hasMany(Tag::class);
+        return $this->belongsToMany(Tag::class);
     }
 }

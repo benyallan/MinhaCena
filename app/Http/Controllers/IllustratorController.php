@@ -29,12 +29,7 @@ class IllustratorController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all();
-        $user = User::create($dados);
-        $dados['user_id'] = $user->id;
-        $user->user_type = 'Illustrator';
-        $illustrator = Illustrator::create($dados);
-        $illustrator->save();
+        $illustrator = Illustrator::create($request->all());
         return new IllustratorResource($illustrator);
     }
 
@@ -93,21 +88,4 @@ class IllustratorController extends Controller
         $illustrator->delete();
         return json_encode('Ilustador apagado!');
     }
-
-    /**
-     * .
-     *
-     * @param  \App\Models\Illustrator  $illustrator
-     * @return \Illuminate\Http\Response
-     */
-    public function socialMedias($illustrator)
-    {
-        $illustrator = Illustrator::find($illustrator);
-        if (is_null($illustrator)) {
-            return json_encode('Ilustrador não existe!');
-        }
-        return SocialMediasResource::collection($illustrator->socialMedias);
-    }
-
-
 }

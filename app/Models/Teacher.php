@@ -13,17 +13,11 @@ class Teacher extends Model
         'name',
         'cpf',
         'birthday',
-        'state',
-        'city',
+        'school_id',
     ];
 
-    public function user()
+    public function school()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function schools()
-    {
-        return $this->belongsToMany(School::class);
+        return $this->belongsTo(School::class);
     }
 }

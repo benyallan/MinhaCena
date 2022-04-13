@@ -18,9 +18,8 @@ class illustrate_redactionFactory extends Factory
         return [
             'redaction_id' => Redaction::factory()->create()->id,
             'illustrator_id' => Illustrator::factory()->create()->id,
-            'delivered_at' => $this->faker->date('d_m_Y'),
+            'delivered_at' => $this->faker->date('d-m-Y'),
             'illustration' => $this->faker->url(),
-            'unlocked_at' => $this->faker->date('d_m_Y')
         ];
     }
 }

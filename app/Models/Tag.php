@@ -9,6 +9,10 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'tag'
+    ];
+
     public function redactions()
     {
         return $this->belongsToMany(Redaction::class);

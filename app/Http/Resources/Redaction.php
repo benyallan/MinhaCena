@@ -3,16 +3,11 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\School as SchoolResource;
+use App\Http\Resources\Teacher as TeacherResource;
 
-class User extends JsonResource
+class Redaction extends JsonResource
 {
-        /**
-     * The "data" wrapper that should be applied.
-     *
-     * @var string
-     */
-    public static $wrap = 'usuário';
-
     /**
      * Transform the resource into an array.
      *
@@ -23,9 +18,11 @@ class User extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'lastAccess' => $this->lastAccess,
+            'title' => $this->title,
+            'student' => $this->student,
+            'school' => new SchoolResource($this->school),
+            'teacher' => new TeacherResource($this->teacher),
+            'composing' => $this->composing,
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Http\Resources\Teacher as TeacherResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return Teacher::all();
+        return TeacherResource::collection(Teacher::all());
     }
 
     /**
@@ -26,7 +27,7 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        return Teacher::create($request->all());
+        return new TeacherResource(Teacher::create($request->all()));
     }
 
     /**
@@ -35,13 +36,13 @@ class TeacherController extends Controller
      * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function show(Teacher $teacher)
+    public function show($teacher)
     {
         $teacher = Teacher::find($teacher);
         if (is_null($teacher)) {
             return json_encode('Professor não existe!');
         }
-        return $teacher;
+        return new TeacherResource($teacher);
     }
 
     /**
@@ -51,14 +52,14 @@ class TeacherController extends Controller
      * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, $teacher)
     {
-        $illusteachertrator = Teacher::find($teacher);
+        $teacher = Teacher::find($teacher);
         if (is_null($teacher)) {
             return json_encode('Professor não existe!');
         }
         $teacher->update($request->all());
-        return $teacher;
+        return new TeacherResource($teacher);
     }
 
     /**
@@ -69,16 +70,11 @@ class TeacherController extends Controller
      */
     public function destroy($teacher)
     {
-        //$teacher = Teacher::find($teacher);
-        /*
+        $teacher = Teacher::find($teacher);
         if (is_null($teacher)) {
             return json_encode('Professor não existe!');
         }
-        */
-        dd($teacher);
-        $user = User::find($teacher->user_id);
-        //dd($user);
-        $user->delete();
+        $teacher->delete();
         return json_encode('Professor apagado!');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SocialMedias extends JsonResource
+class Teacher extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,9 @@ class SocialMedias extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
             'name' => $this->name,
-            'urlAddress' => $this->urlAddress,
+            'cpf' => $this->cpf,
+            'birthday' => $this->birthday,
         ];
     }
 }

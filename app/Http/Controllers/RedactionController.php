@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Redaction;
 use Illuminate\Http\Request;
+use App\Http\Resources\Redaction as RedactionResource;
 
 class RedactionController extends Controller
 {
@@ -15,7 +16,7 @@ class RedactionController extends Controller
      */
     public function index()
     {
-        return Redaction::all();
+        return RedactionResource::collection(Redaction::all());
     }
 
     /**
@@ -26,7 +27,8 @@ class RedactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $redaction = Redaction::creaate($request->all());
+        return new RedactionResource($redaction);
     }
 
     /**
@@ -35,9 +37,13 @@ class RedactionController extends Controller
      * @param  \App\Models\Redaction  $redaction
      * @return \Illuminate\Http\Response
      */
-    public function show(Redaction $redaction)
+    public function show($redaction)
     {
-        //
+        $redaction = Redaction::find($redaction);
+        if (is_null($redaction)) {
+            return json_encode('Redação não encontrada!');
+        }
+        return new RedactionResource($redaction);
     }
 
     /**
@@ -47,9 +53,14 @@ class RedactionController extends Controller
      * @param  \App\Models\Redaction  $redaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Redaction $redaction)
+    public function update(Request $request, $redaction)
     {
-        //
+        $redaction = Redaction::find($redaction);
+        if (is_null($redaction)) {
+            return json_encode('Redação não encontrada!');
+        }
+        $redaction->update($request->all());
+        return new RedactionResource($redaction);
     }
 
     /**
@@ -58,8 +69,13 @@ class RedactionController extends Controller
      * @param  \App\Models\Redaction  $redaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Redaction $redaction)
+    public function destroy($redaction)
     {
-        //
+        $redaction = Redaction::find($redaction);
+        if (is_null($redaction)) {
+            return json_encode('Redação não encontrada!');
+        }
+        $redaction->delete();
+        return json_encode('Redação apagada!');
     }
 }

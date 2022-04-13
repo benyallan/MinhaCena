@@ -15,13 +15,14 @@ class SchoolFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory()->create(['user_type' => 'School'])->id,
             'name' => $this->faker->company(),
             'contactPerson' => $this->faker->name(),
             'type' => $this->faker->word(),
+            'street' => $this->faker->streetName(),
+            'number' => $this->faker->randomNumber(),
             'state' => $this->faker->state(),
             'city' => $this->faker->city(),
-            'unlocked_at' => $this->faker->date('d_m_Y')
+            'unlocked_at' => $this->faker->date('d/m/Y')
         ];
     }
 }
