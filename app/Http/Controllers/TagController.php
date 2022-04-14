@@ -51,13 +51,13 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, $tag)
     {
         $tag = Tag::find($tag);
         if (is_null($tag)) {
             return json_encode('Tag não existe!');
         }
-        $tag->update($tag->all());
+        $tag->update($request->all());
         return new TagResource($tag);
     }
 
@@ -67,7 +67,7 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy($tag)
     {
         $tag = Tag::find($tag);
         if (is_null($tag)) {

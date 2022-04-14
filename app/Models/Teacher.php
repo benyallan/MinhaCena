@@ -20,4 +20,10 @@ class Teacher extends Model
     {
         return $this->belongsTo(School::class);
     }
+
+
+    public function redaction()
+    {
+        return $this->hasMany(Redaction::class);
+    }
 }

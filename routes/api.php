@@ -29,15 +29,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //Route::apiResource('users', RedactionController::class);
 
-Route::apiResource('administrators', AdministratorController::class);
 Route::apiResource('illustrators', IllustratorController::class);
-Route::get('illustrators/{illustrator}/socialmedias', [IllustratorController::class, 'socialMedias']);
 Route::apiResource('logs', LogController::class);
 Route::apiResource('redactions', RedactionController::class);
 Route::apiResource('schools', SchoolController::class);
-Route::apiResource('socialMedias', SocialMediaController::class);
 Route::apiResource('tags', TagController::class);
 Route::apiResource('teachers', TeacherController::class);
-
-
 

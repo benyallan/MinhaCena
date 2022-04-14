@@ -27,7 +27,7 @@ class RedactionController extends Controller
      */
     public function store(Request $request)
     {
-        $redaction = Redaction::creaate($request->all());
+        $redaction = Redaction::create($request->all());
         return new RedactionResource($redaction);
     }
 

@@ -24,12 +24,12 @@ class Redaction extends Model
 
     public function teacher()
     {
-        return $this->hasOne(Teacher::class);
+        return $this->belongsTo(Teacher::class);
     }
 
     public function school()
     {
-        return $this->hasOne(School::class);
+        return $this->belongsTo(School::class);
     }
 
     public function tags()

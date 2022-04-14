@@ -10,7 +10,6 @@ class School extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'name',
         'contactPerson',
         'type',
@@ -28,5 +27,10 @@ class School extends Model
     public function teachers()
     {
         return $this->hasMany(Teacher::class);
+    }
+
+    public function redactions()
+    {
+        return $this->hasMany(Redaction::class);
     }
 }
