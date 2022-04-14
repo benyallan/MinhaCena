@@ -26,7 +26,7 @@ class School extends JsonResource
             'state'=> $this->state,
             'city'=> $this->city,
             'unlocked_at'=> $this->unlocked_at,
-            'credenciais'=> new UserResource(User::find($this->user_id)),
+            'credenciais'=> new UserResource(User::find($this->user->id)),
             'created_at'=> $this->created_at,
             'updated_at'=> $this->updated_at,
         ];

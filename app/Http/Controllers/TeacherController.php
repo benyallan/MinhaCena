@@ -14,8 +14,9 @@ class TeacherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        //dd($request->user);
         return TeacherResource::collection(Teacher::all());
     }
 

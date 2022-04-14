@@ -18,7 +18,9 @@ class TeacherPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        if ($user) {
+            # code...
+        }
     }
 
     /**

@@ -27,7 +27,7 @@ class Illustrator extends JsonResource
             'portfolio' => $this->portfolio,
             'created_at' => $this->created_at->format('d/m/Y'),
             'updated_at' => $this->updated_at->format('d/m/Y'),
-            'credenciais' => new UserResource($this->user),
+            'credenciais' => new UserResource($this->user->id),
             'socialMedias' => $this->socialMedias,
         ];
     }
