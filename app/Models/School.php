@@ -17,6 +17,7 @@ class School extends Model
         'number',
         'state',
         'city',
+        'user_id',
     ];
 
     public function user()

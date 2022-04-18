@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->morphTo();
     }
+
+    public function isAdministrator()
+    {
+        return is_null($this->data);
+    }
 }
