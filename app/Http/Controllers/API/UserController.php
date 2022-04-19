@@ -34,7 +34,6 @@ class UserController extends Controller
                 'data_type' => $modelUser['type']
             ]);
         $user->data->update(['user_id' => $user->id]);
-        //dd($user->data);
         return $this->toResourceModel($user->data);
     }
 
