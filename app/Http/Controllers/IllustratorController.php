@@ -21,7 +21,7 @@ class IllustratorController extends Controller
     public function index(Request $request)
     {
         if ($request->user()->data) {
-            Gate::authorize('viewAny', $request->user()->data);
+            Gate::authorize('viewAny', Illustrator::class);
         }
 
         return IllustratorResource::collection(Illustrator::all());
