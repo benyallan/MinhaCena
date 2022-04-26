@@ -8,6 +8,8 @@ use App\Http\Resources\SocialMedias as SocialMediasResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class IllustratorController extends Controller
 {
@@ -29,11 +31,25 @@ class IllustratorController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validator = Validator::make($request->all(),[
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $user = User::create([
+            'user_type' => 'Illustrator',
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
         $dados = $request->all();
-        $user = User::create($dados);
-        $dados['user_id'] = $user->id;
-        $user->user_type = 'Illustrator';
         $illustrator = Illustrator::create($dados);
+        $illustrator->user_id = $user->id;
         $illustrator->save();
         return new IllustratorResource($illustrator);
     }
@@ -67,15 +83,28 @@ class IllustratorController extends Controller
             return json_encode('Ilustrador não existe!');
         }
         $illustrator->update($request->all());
+
         if (Arr::exists($request->all(), 'email')) {
+            $validator = Validator::make($request->all(),[
+                'email' => 'required|string|email|max:255|unique:users'
+            ]);
+            if($validator->fails()){
+                return response()->json($validator->errors());
+            }
             $illustrator->user()
                 ->update(['email' => Arr::get($request->all(), 'email')]);
         }
         if (Arr::exists($request->all(), 'password')) {
-            $illustrator->user()
-            ->update(['password' => Arr::get($request->all(), 'password')]);
+            $validator = Validator::make($request->all(),[
+                'password' => 'required|string|min:8'
+            ]);
+            if($validator->fails()){
+                return response()->json($validator->errors());
+            }
+                $illustrator->user()
+                ->update(['password' => Hash::make(Arr::get($request->all(), 'password'))]);
         }
-        return new IllustratorResource($illustrator);
+        return json_encode('Dados alterados!');
     }
 
     /**
@@ -90,8 +119,11 @@ class IllustratorController extends Controller
         if (is_null($illustrator)) {
             return json_encode('Ilustrador não existe!');
         }
+        $user_id = $illustrator->user_id;
+        $user = User::find($user_id);
+        $user->delete();
         $illustrator->delete();
-        return json_encode('Ilustador apagado!');
+        return json_encode('Ilustrador apagado!');
     }
 
     /**

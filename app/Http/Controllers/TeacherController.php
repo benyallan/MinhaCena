@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Http\Resources\Teacher as TeacherResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class TeacherController extends Controller
 {
@@ -15,7 +19,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return Teacher::all();
+        return TeacherResource::collection(Teacher::all());
     }
 
     /**
@@ -26,7 +30,26 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        return Teacher::create($request->all());
+        $validator = Validator::make($request->all(),[
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $user = User::create([
+            'user_type' => 'Professor',
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $dados = $request->all();
+        $teacher = Teacher::create($dados);
+        $teacher->user_id = $user->id;
+        $teacher->save();
+        return new TeacherResource($teacher);
     }
 
     /**
@@ -35,13 +58,13 @@ class TeacherController extends Controller
      * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function show(Teacher $teacher)
+    public function show($teacher)
     {
         $teacher = Teacher::find($teacher);
         if (is_null($teacher)) {
             return json_encode('Professor não existe!');
         }
-        return $teacher;
+        return new TeacherResource($teacher);
     }
 
     /**
@@ -51,14 +74,35 @@ class TeacherController extends Controller
      * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, $teacher)
     {
-        $illusteachertrator = Teacher::find($teacher);
+        $teacher = Teacher::find($teacher);
         if (is_null($teacher)) {
             return json_encode('Professor não existe!');
         }
         $teacher->update($request->all());
-        return $teacher;
+
+        if (Arr::exists($request->all(), 'email')) {
+            $validator = Validator::make($request->all(),[
+                'email' => 'required|string|email|max:255|unique:users'
+            ]);
+            if($validator->fails()){
+                return response()->json($validator->errors());
+            }
+            $teacher->user()
+                ->update(['email' => Arr::get($request->all(), 'email')]);
+        }
+        if (Arr::exists($request->all(), 'password')) {
+            $validator = Validator::make($request->all(),[
+                'password' => 'required|string|min:8'
+            ]);
+            if($validator->fails()){
+                return response()->json($validator->errors());
+            }
+            $teacher->user()
+                ->update(['password' => Hash::make(Arr::get($request->all(), 'password'))]);
+        }
+        return json_encode('Dados alterados!');
     }
 
     /**
@@ -69,16 +113,14 @@ class TeacherController extends Controller
      */
     public function destroy($teacher)
     {
-        //$teacher = Teacher::find($teacher);
-        /*
+        $teacher = Teacher::find($teacher);
         if (is_null($teacher)) {
             return json_encode('Professor não existe!');
         }
-        */
-        dd($teacher);
-        $user = User::find($teacher->user_id);
-        //dd($user);
+        $user_id = $teacher->user_id;
+        $user = User::find($user_id);
         $user->delete();
+        $teacher->delete();
         return json_encode('Professor apagado!');
     }
 }

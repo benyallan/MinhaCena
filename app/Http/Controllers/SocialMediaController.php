@@ -67,7 +67,7 @@ class SocialMediaController extends Controller
         }
         $dados = $request->all();
         $socialMedia->update($dados);
-        return new SocialMediasResource($socialMedia);
+        return json_encode('Dados alterados!');
     }
 
     /**

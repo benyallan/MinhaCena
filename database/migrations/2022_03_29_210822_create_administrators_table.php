@@ -19,7 +19,7 @@ class CreateAdministratorsTable extends Migration
                 ->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('cpf');
-            $table->timestamp('birthday');
+            $table->date('birthday');
             $table->string('state');
             $table->string('city');
             $table->timestamps();

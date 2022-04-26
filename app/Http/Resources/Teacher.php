@@ -6,15 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\User as UserResource;
 use Carbon\Carbon;
 
-class Administrator extends JsonResource
+class Teacher extends JsonResource
 {
-        /**
-     * The "data" wrapper that should be applied.
-     *
-     * @var string
-     */
-    public static $wrap = 'Administrador';
-
     /**
      * Transform the resource into an array.
      *
@@ -31,11 +24,10 @@ class Administrator extends JsonResource
             'birthday' => $this->birthday,
             'state' => $this->state,
             'city' => $this->city,
+            'unlocked_at'=> $this->unlocked_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'credentials' => new UserResource($this->user),
         ];
-
-
     }
 }

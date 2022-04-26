@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\SocialMedia::factory(5)->create();
         \App\Models\Tag::factory(5)->create();
         \App\Models\Log::factory(5)->create();
+        \App\Models\RedactionTag::factory(15)->create();
 
     }
 }

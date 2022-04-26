@@ -17,6 +17,7 @@ class SocialMedia extends Model
     protected $fillable = [
         'name',
         'urlAddress',
+        'illustrator_id',
     ];
 
     public function illustrator()

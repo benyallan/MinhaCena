@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Redaction;
+use App\Http\Resources\Redaction as RedactionResource;
 use Illuminate\Http\Request;
 
 class RedactionController extends Controller
@@ -15,7 +16,7 @@ class RedactionController extends Controller
      */
     public function index()
     {
-        return Redaction::all();
+        return RedactionResource::collection(Redaction::all());
     }
 
     /**

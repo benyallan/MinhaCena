@@ -10,11 +10,13 @@ class Teacher extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'cpf',
         'birthday',
         'state',
         'city',
+        'unlocked_at',
     ];
 
     public function user()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Log;
+use App\Http\Resources\Log as LogResource;
 use Illuminate\Http\Request;
 
 class LogController extends Controller
@@ -14,7 +15,7 @@ class LogController extends Controller
      */
     public function index()
     {
-        return Log::all();
+        return LogResource::collection(Log::all());
     }
 
     /**
@@ -25,7 +26,8 @@ class LogController extends Controller
      */
     public function store(Request $request)
     {
-        return Log::create($request->all());
+        $log = Log::create($request->all());
+        return new LogResource($log);
     }
 
     /**
@@ -34,7 +36,7 @@ class LogController extends Controller
      * @param  \App\Models\Log  $log
      * @return \Illuminate\Http\Response
      */
-    public function show(Log $log)
+    public function show($log)
     {
         $log = Log::find($log);
         if (is_null($log)) {
@@ -50,14 +52,14 @@ class LogController extends Controller
      * @param  \App\Models\Log  $log
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Log $log)
+    public function update(Request $request, $log)
     {
         $log = Log::find($log);
         if (is_null($log)) {
             return json_encode('Log não existe!');
         }
         $log->update($request->all());
-        return $log;
+        return json_encode('Dados alterados!');
     }
 
     /**
@@ -66,7 +68,7 @@ class LogController extends Controller
      * @param  \App\Models\Log  $log
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Log $log)
+    public function destroy($log)
     {
         $log = Log::find($log);
         if (is_null($log)) {

@@ -10,12 +10,12 @@ class Administrator extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'cpf',
         'birthday',
         'state',
         'city',
-        'user_id',
     ];
 
     public function user()
@@ -23,5 +23,5 @@ class Administrator extends Model
         return $this->belongsTo(User::class);
     }
 
-    
+
 }

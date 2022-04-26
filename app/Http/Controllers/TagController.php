@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use App\Http\Resources\Tag as TagResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TagController extends Controller
 {
@@ -14,7 +16,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        return Tag::all();
+        return TagResource::collection(Tag::all());
     }
 
     /**
@@ -25,7 +27,15 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        return Tag::create($request->all());
+        $validator = Validator::make($request->all(),[
+            'tag' => 'required|unique:tags'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+        $tag = Tag::create($request->all());
+        return new TagResource($tag);
     }
 
     /**
@@ -34,7 +44,7 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show($tag)
     {
         $tag = Tag::find($tag);
         if (is_null($tag)) {
@@ -50,14 +60,21 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, $tag)
     {
         $tag = Tag::find($tag);
         if (is_null($tag)) {
             return json_encode('Tag não existe!');
         }
+        $validator = Validator::make($request->all(),[
+            'tag' => 'required|unique:tags'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
         $tag->update($tag->all());
-        return $tag;
+        return json_encode('Dados alterados!');
     }
 
     /**
@@ -66,13 +83,13 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy($tag)
     {
         $tag = Tag::find($tag);
         if (is_null($tag)) {
             return json_encode('Tag não existe!');
         }
         $tag->delete();
-        return json_encode('Tag apagado!');
+        return json_encode('Tag apagada!');
     }
 }

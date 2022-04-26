@@ -11,6 +11,8 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\IllustratorController;
 use App\Http\Controllers\AdministratorController;
 
+use App\Http\Controllers\UserController2;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,22 +24,52 @@ use App\Http\Controllers\AdministratorController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+
+Route::apiResource('user', UserController2::class);
+
+
+//API route for login user
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+
+
+//Protecting Routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function(Request $request) {
+        return auth()->user();
+    });
+
+    Route::apiResource('administrators', AdministratorController::class)
+    ->except(['store']);
+
+    Route::apiResource('illustrators', IllustratorController::class)
+        ->except(['store']);
+    Route::apiResource('socialMedias', SocialMediaController::class);
+    Route::get('illustrators/{illustrator}/socialmedias', [IllustratorController::class, 'socialMedias']);
+
+    Route::apiResource('schools', SchoolController::class)
+        ->except(['store']);
+
+    Route::apiResource('teachers', TeacherController::class)
+        ->except(['store']);
+
+    Route::apiResource('logs', LogController::class);
+
+    Route::apiResource('redactions', RedactionController::class);
+    Route::apiResource('tags', TagController::class);
+
+    // API route for logout user
+    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
 
-
-//Route::apiResource('users', RedactionController::class);
-
-Route::apiResource('administrators', AdministratorController::class);
-Route::apiResource('illustrators', IllustratorController::class);
-Route::get('illustrators/{illustrator}/socialmedias', [IllustratorController::class, 'socialMedias']);
-Route::apiResource('logs', LogController::class);
-Route::apiResource('redactions', RedactionController::class);
-Route::apiResource('schools', SchoolController::class);
-Route::apiResource('socialMedias', SocialMediaController::class);
-Route::apiResource('tags', TagController::class);
-Route::apiResource('teachers', TeacherController::class);
-
-
-
+Route::apiResource('administrators', AdministratorController::class)
+    ->only(['store']);
+Route::apiResource('illustrators', IllustratorController::class)
+    ->only(['store']);
+Route::apiResource('schools', SchoolController::class)
+    ->only(['store']);
+Route::apiResource('teachers', TeacherController::class)
+    ->only(['store']);

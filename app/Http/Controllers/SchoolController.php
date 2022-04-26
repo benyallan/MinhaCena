@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\School as SchoolResource;
 use App\Models\School;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class SchoolController extends Controller
 {
@@ -14,7 +19,7 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        return School::all();
+        return SchoolResource::collection(School::all());
     }
 
     /**
@@ -25,7 +30,26 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
-        return School::create($request->all());
+        $validator = Validator::make($request->all(),[
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $user = User::create([
+            'user_type' => 'Escola',
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $dados = $request->all();
+        $school = School::create($dados);
+        $school->user_id = $user->id;
+        $school->save();
+        return new SchoolResource($school);
     }
 
     /**
@@ -34,13 +58,13 @@ class SchoolController extends Controller
      * @param  \App\Models\School  $school
      * @return \Illuminate\Http\Response
      */
-    public function show(School $school)
+    public function show($school)
     {
         $school = School::find($school);
         if (is_null($school)) {
             return json_encode('Escola não existe!');
         }
-        return $school;
+        return new SchoolResource($school);
     }
 
     /**
@@ -50,14 +74,35 @@ class SchoolController extends Controller
      * @param  \App\Models\School  $school
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, School $school)
+    public function update(Request $request, $school)
     {
         $school = School::find($school);
         if (is_null($school)) {
             return json_encode('Escola não existe!');
         }
         $school->update($request->all());
-        return $school;
+
+        if (Arr::exists($request->all(), 'email')) {
+            $validator = Validator::make($request->all(),[
+                'email' => 'required|string|email|max:255|unique:users'
+            ]);
+            if($validator->fails()){
+                return response()->json($validator->errors());
+            }
+            $school->user()
+                ->update(['email' => Arr::get($request->all(), 'email')]);
+        }
+        if (Arr::exists($request->all(), 'password')) {
+            $validator = Validator::make($request->all(),[
+                'password' => 'required|string|min:8'
+            ]);
+            if($validator->fails()){
+                return response()->json($validator->errors());
+            }
+            $school->user()
+                ->update(['password' => Hash::make(Arr::get($request->all(), 'password'))]);
+        }
+        return json_encode('Dados alterados!');
     }
 
     /**
@@ -66,13 +111,16 @@ class SchoolController extends Controller
      * @param  \App\Models\School  $school
      * @return \Illuminate\Http\Response
      */
-    public function destroy(School $school)
+    public function destroy($school)
     {
         $school = School::find($school);
         if (is_null($school)) {
             return json_encode('Escola não existe!');
         }
+        $user_id = $school->user_id;
+        $user = User::find($user_id);
+        $user->delete();
         $school->delete();
-        return json_encode('Escola apagado!');
+        return json_encode('Escola apagada!');
     }
 }

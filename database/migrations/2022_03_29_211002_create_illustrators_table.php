@@ -23,7 +23,7 @@ class CreateIllustratorsTable extends Migration
             $table->string('state');
             $table->string('city');
             $table->string('portfolio')->nullable();
-            $table->timestamp('unlocked_at')->nullable();
+            $table->date('unlocked_at')->nullable();
             $table->timestamps();
         });
     }

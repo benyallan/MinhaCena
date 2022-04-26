@@ -16,9 +16,9 @@ class IllustrateRedaction extends Migration
         Schema::create('illustrate_redactions', function (Blueprint $table) {
             $table->foreignId('redaction_id');
             $table->foreignId('illustrator_id');
-            $table->timestamp('delivered_at');
+            $table->date('delivered_at');
             $table->string('illustration');
-            $table->timestamp('unlocked_at');
+            $table->date('unlocked_at');
             $table->primary(['redaction_id','illustrator_id']);
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class IllustrateRedaction extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('illustrationRedaction');
+        Schema::dropIfExists('illustrate_redactions');
     }
 }

@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Tag as TagResurce;
 
-class SocialMedias extends JsonResource
+class RedactionTag extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +16,8 @@ class SocialMedias extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'illustrator_id' => $this->illustrator_id,
-            'name' => $this->name,
-            'urlAddress' => $this->urlAddress,
+            'redaction_id' => $this->redaction_id,
+            'tag_id' => new TagResurce($this->tags),
         ];
     }
 }

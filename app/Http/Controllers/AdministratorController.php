@@ -7,6 +7,8 @@ use App\Models\Administrator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdministratorController extends Controller
 {
@@ -28,10 +30,24 @@ class AdministratorController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validator = Validator::make($request->all(),[
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $user = User::create([
+            'user_type' => 'Administrator',
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
         $dados = $request->all();
         $administrator = Administrator::create($dados);
-        $user = User::create($dados);
-        $user->user_type = 'Administrator';
         $administrator->user_id = $user->id;
         $administrator->save();
         return new AdministratorResource($administrator);
@@ -66,15 +82,28 @@ class AdministratorController extends Controller
             return json_encode('Adminstrador não existe!');
         }
         $administrator->update($request->all());
+
         if (Arr::exists($request->all(), 'email')) {
+            $validator = Validator::make($request->all(),[
+                'email' => 'required|string|email|max:255|unique:users'
+            ]);
+            if($validator->fails()){
+                return response()->json($validator->errors());
+            }
             $administrator->user()
                 ->update(['email' => Arr::get($request->all(), 'email')]);
         }
         if (Arr::exists($request->all(), 'password')) {
-            $administrator->user()
-            ->update(['password' => Arr::get($request->all(), 'password')]);
+            $validator = Validator::make($request->all(),[
+                'password' => 'required|string|min:8'
+            ]);
+            if($validator->fails()){
+                return response()->json($validator->errors());
+            }
+                $administrator->user()
+                ->update(['password' => Hash::make(Arr::get($request->all(), 'password'))]);
         }
-        return new AdministratorResource($administrator);
+        return json_encode('Dados alterados!');
     }
 
     /**
@@ -89,9 +118,11 @@ class AdministratorController extends Controller
         if (is_null($administrator)) {
             return json_encode('Administrador não existe!');
         }
+        $user_id = $administrator->user_id;
+        $user = User::find($user_id);
+        $user->delete();
         $administrator->delete();
         return json_encode('Administrador apagado!');
     }
-
 
 }

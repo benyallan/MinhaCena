@@ -10,13 +10,14 @@ class Illustrator extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'cpf',
         'birthday',
         'state',
         'city',
-        'user_id',
         'portfolio',
+        'unlocked_at',
     ];
 
     public function user()

@@ -4,16 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRedactionTagTable extends Migration
+class CreateRedactionTagsTable extends Migration
 {
     /**
      * Run the migrations.
      *
-     * @return void
+     * @return voids
      */
     public function up()
     {
-        Schema::create('redaction_tag', function (Blueprint $table) {
+        Schema::create('redaction_tags', function (Blueprint $table) {
             $table->foreignId('redaction_id');
             $table->foreignId('tag_id');
             $table->primary(['redaction_id','tag_id']);
@@ -28,6 +28,6 @@ class CreateRedactionTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('redaction_tag');
+        Schema::dropIfExists('redaction_tags');
     }
 }

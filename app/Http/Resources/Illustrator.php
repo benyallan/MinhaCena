@@ -19,17 +19,19 @@ class Illustrator extends JsonResource
     {
         return [
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'name' => $this->name,
             'cpf' => $this->cpf,
-            'birthday' => Carbon::parse($this->birthday)->format('d/m/Y'),
+            'birthday' => $this->birthday,
             'state' => $this->state,
             'city' => $this->city,
             'portfolio' => $this->portfolio,
-            'created_at' => $this->created_at->format('d/m/Y'),
-            'updated_at' => $this->updated_at->format('d/m/Y'),
-            'credenciais' => new UserResource($this->user),
             'socialMedias' =>
                     SocialMediasResource::collection($this->socialMedias),
+            'unlocked_at'=> $this->unlocked_at,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'credentials' => new UserResource($this->user),
         ];
     }
 }

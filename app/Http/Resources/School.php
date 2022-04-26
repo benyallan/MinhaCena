@@ -4,17 +4,10 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\User as UserResource;
-use Carbon\Carbon;
+use App\Models\User;
 
-class Administrator extends JsonResource
+class School extends JsonResource
 {
-        /**
-     * The "data" wrapper that should be applied.
-     *
-     * @var string
-     */
-    public static $wrap = 'Administrador';
-
     /**
      * Transform the resource into an array.
      *
@@ -24,18 +17,17 @@ class Administrator extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'id'=> $this->id,
             'user_id' => $this->user_id,
-            'name' => $this->name,
-            'cpf' => $this->cpf,
-            'birthday' => $this->birthday,
-            'state' => $this->state,
-            'city' => $this->city,
+            'name'=> $this->name,
+            'contactPerson'=> $this->contactPerson,
+            'type'=> $this->type,
+            'state'=> $this->state,
+            'city'=> $this->city,
+            'unlocked_at'=> $this->unlocked_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'credentials' => new UserResource($this->user),
         ];
-
-
     }
 }

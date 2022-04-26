@@ -15,6 +15,8 @@ class IllustrateRedaction extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'redaction_id',
+        'illustrator_id',
         'delivered_at',
         'illustration',
         'unlocked_at',

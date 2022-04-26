@@ -16,13 +16,13 @@ class CreateTeachersTable extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->constrained()->onDelete('cascade');
+                ->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('cpf');
             $table->date('birthday');
             $table->string('state');
             $table->string('city');
-            $table->timestamp('unlocked_at');
+            $table->date('unlocked_at')->nullable();
             $table->timestamps();
         });
     }

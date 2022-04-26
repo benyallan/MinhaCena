@@ -9,6 +9,14 @@ class Redaction extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'student',
+        'school_id',
+        'teacher_id',
+        'composing',
+    ];
+
     public function logs()
     {
         return $this->hasMany(Log::class);
@@ -16,16 +24,20 @@ class Redaction extends Model
 
     public function teacher()
     {
-        return $this->hasOne(Teacher::class);
+        return $this->belongsTo(Teacher::class);
     }
 
     public function school()
     {
-        return $this->hasOne(School::class);
+        return $this->belongsTo(School::class);
     }
 
+    public function redactiontags()
+    {
+        return $this->hasMany(RedactionTag::class);
+    }
     public function tags()
     {
-        return $this->hasMany(Tag::class);
+        return $this->hasOne(Tag::class);
     }
 }
