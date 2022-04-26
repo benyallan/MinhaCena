@@ -13,7 +13,7 @@ class CreateRedactionTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('redaction_tags', function (Blueprint $table) {
+        Schema::create('redaction_tag', function (Blueprint $table) {
             $table->foreignId('redaction_id');
             $table->foreignId('tag_id');
             $table->primary(['redaction_id','tag_id']);
@@ -28,6 +28,6 @@ class CreateRedactionTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('redaction_tags');
+        Schema::dropIfExists('redaction_tag');
     }
 }

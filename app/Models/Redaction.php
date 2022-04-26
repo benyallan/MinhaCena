@@ -32,12 +32,10 @@ class Redaction extends Model
         return $this->belongsTo(School::class);
     }
 
-    public function redactiontags()
-    {
-        return $this->hasMany(RedactionTag::class);
-    }
     public function tags()
     {
-        return $this->hasOne(Tag::class);
+        return $this->belongsToMany(Tag::class);
     }
+
+
 }

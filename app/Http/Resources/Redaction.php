@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\School as SchoolResource;
 use App\Http\Resources\Teacher as TeacherResource;
-use App\Http\Resources\RedactionTag as RedactionTagResource;
+use App\Http\Resources\Tag as TagResource;
 
 class Redaction extends JsonResource
 {
@@ -25,7 +25,7 @@ class Redaction extends JsonResource
             'teacher' => new TeacherResource($this->teacher),
             'composing' => $this->composing,
             'tags' =>
-                RedactionTagResource::collection($this->redactiontags),
+                TagResource::collection($this->tags),
         ];
     }
 }

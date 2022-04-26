@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Tag as TagResurce;
 
-class RedactionTag extends JsonResource
+class redaction_illustrations extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +14,6 @@ class RedactionTag extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'redaction_id' => $this->redaction_id,
-            'tag_id' => $this->tag_id,//new TagResurce($this->tags),
-        ];
+        return parent::toArray($request);
     }
 }

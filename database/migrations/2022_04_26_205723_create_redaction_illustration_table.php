@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class IllustrateRedaction extends Migration
+class CreateRedactionIllustrationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class IllustrateRedaction extends Migration
      */
     public function up()
     {
-        Schema::create('illustrate_redactions', function (Blueprint $table) {
+        Schema::create('redaction_illustration', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('redaction_id');
             $table->foreignId('illustrator_id');
             $table->date('delivered_at');
@@ -31,6 +32,6 @@ class IllustrateRedaction extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('illustrate_redactions');
+        Schema::dropIfExists('redaction_illustration');
     }
 }
