@@ -37,5 +37,15 @@ class Redaction extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-
+    public function illustrators()
+    {
+        return $this->belongsToMany(Illustrator::class)
+            ->withTimestamps()->withPivot(
+                'delivered_at',
+                'illustration',
+                'unlocked_at',
+                'redaction_id',
+                'illustrator_id',
+            );
+    }
 }

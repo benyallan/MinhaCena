@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Http\Resources\Redaction;
+use App\Models\Illustrator;
 use App\Models\Redaction as ModelsRedaction;
 use App\Models\Tag;
 use Illuminate\Database\Seeder;
@@ -29,7 +30,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Tag::factory(5)->create();
         \App\Models\Log::factory(5)->create();
         foreach (ModelsRedaction::all() as $redaction) {
-            $redaction->tags()->attach(Tag::first());
+            $redaction->tags()->attach(rand(1,5));
+            $redaction->illustrators()->attach(rand(1,5));
         }
     }
 }

@@ -29,4 +29,9 @@ class Illustrator extends Model
     {
         return $this->hasMany(SocialMedia::class);
     }
+
+    public function redactions()
+    {
+        return $this->belongsToMany(Redaction::class);
+    }
 }
