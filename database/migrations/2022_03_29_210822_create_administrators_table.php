@@ -20,8 +20,8 @@ class CreateAdministratorsTable extends Migration
             $table->string('name');
             $table->string('cpf');
             $table->date('birthday');
-            $table->string('state');
-            $table->string('city');
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
             $table->timestamps();
         });
     }

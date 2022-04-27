@@ -15,8 +15,6 @@ class SocialMedias extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'illustrator_id' => $this->illustrator_id,
             'name' => $this->name,
             'urlAddress' => $this->urlAddress,
         ];

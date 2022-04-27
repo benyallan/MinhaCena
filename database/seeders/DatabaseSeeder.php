@@ -30,8 +30,10 @@ class DatabaseSeeder extends Seeder
         \App\Models\Tag::factory(5)->create();
         \App\Models\Log::factory(5)->create();
         foreach (ModelsRedaction::all() as $redaction) {
-            $redaction->tags()->attach(rand(1,5));
-            $redaction->illustrators()->attach(rand(1,5));
+            $redaction->tags()->attach(rand(1,3));
+            $redaction->tags()->attach(rand(4,5));
+            $redaction->illustrators()->attach(rand(1,3));
+            $redaction->illustrators()->attach(rand(4,5));
         }
     }
 }

@@ -14,8 +14,8 @@ class CreateIllustratorRedactionTable extends Migration
     public function up()
     {
         Schema::create('illustrator_redaction', function (Blueprint $table) {
-            $table->foreignId('illustrator_id')->constrained();
             $table->foreignId('redaction_id')->constrained();
+            $table->foreignId('illustrator_id')->constrained();
             $table->date('delivered_at')->nullable();
             $table->string('illustration')->nullable();
             $table->date('unlocked_at')->nullable();

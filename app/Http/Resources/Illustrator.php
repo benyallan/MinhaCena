@@ -18,8 +18,6 @@ class Illustrator extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'user_id' => $this->user_id,
             'name' => $this->name,
             'cpf' => $this->cpf,
             'birthday' => $this->birthday,
@@ -29,8 +27,6 @@ class Illustrator extends JsonResource
             'socialMedias' =>
                     SocialMediasResource::collection($this->socialMedias),
             'unlocked_at'=> $this->unlocked_at,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'credentials' => new UserResource($this->user),
         ];
     }

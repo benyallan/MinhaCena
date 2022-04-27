@@ -20,8 +20,8 @@ class CreateSchoolsTable extends Migration
             $table->string('name');
             $table->string('contactPerson');
             $table->string('type');
-            $table->string('state');
-            $table->string('city');
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
             $table->date('unlocked_at')->nullable();
             $table->timestamps();
         });

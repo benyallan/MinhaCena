@@ -17,16 +17,12 @@ class School extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=> $this->id,
-            'user_id' => $this->user_id,
             'name'=> $this->name,
             'contactPerson'=> $this->contactPerson,
             'type'=> $this->type,
             'state'=> $this->state,
             'city'=> $this->city,
             'unlocked_at'=> $this->unlocked_at,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'credentials' => new UserResource($this->user),
         ];
     }

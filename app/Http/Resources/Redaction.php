@@ -20,7 +20,6 @@ class Redaction extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
             'title' => $this->title,
             'student' => $this->student,
             'school' => new SchoolResource($this->school),

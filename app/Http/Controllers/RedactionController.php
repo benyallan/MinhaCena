@@ -38,7 +38,11 @@ class RedactionController extends Controller
      */
     public function show(Redaction $redaction)
     {
-        //
+        $school = Redaction::find($redaction);
+        if (is_null($redaction)) {
+            return json_encode('Redação não existe!');
+        }
+        return new RedactionResource($redaction);
     }
 
     /**
