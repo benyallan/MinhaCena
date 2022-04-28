@@ -4,6 +4,10 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\User as UserResource;
+//use App\Http\Resources\SchoolTeacher as SchoolTeacherResource;
+
+
+
 use Carbon\Carbon;
 
 class Teacher extends JsonResource
@@ -22,6 +26,8 @@ class Teacher extends JsonResource
             'birthday' => $this->birthday,
             'state' => $this->state,
             'city' => $this->city,
+            /*'schools' =>
+                SchoolTeacherResource::collection($this->schools),*/
             'unlocked_at'=> $this->unlocked_at,
             'credentials' => new UserResource($this->user),
         ];
