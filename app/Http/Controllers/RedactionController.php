@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Redaction;
 use App\Http\Resources\Redaction as RedactionResource;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class RedactionController extends Controller
 {
@@ -27,7 +31,24 @@ class RedactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->user()->thisUser()->first()->id);
+        $validator = Validator::make($request->all(),[
+            'title' => 'required',
+            'student' => 'required',
+            'composing' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $tags = $request->tags;
+        $tags = explode(',', $tags);
+        $dados = $request->all();
+        $dados['teacher_id'] = $request->user()->thisUser();
+        $redaction = Redaction::create($dados);
+        $redaction->tags()->sync($tags);
+        return new RedactionResource($redaction);
     }
 
     /**
@@ -52,9 +73,26 @@ class RedactionController extends Controller
      * @param  \App\Models\Redaction  $redaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Redaction $redaction)
+    public function update(Request $request, $redaction)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'title' => 'required',
+            'student' => 'required',
+            'composing' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $tags = $request->tags;
+        $tags = explode(',', $tags);
+        $dados = $request->all();
+        //$dados['teacher_id'] = $request->user()->thisUser()->first()->id;
+        $redaction = Redaction::find($redaction);
+        $redaction->update($dados);
+        $redaction->tags()->sync($tags);
+        return new RedactionResource($redaction);
     }
 
     /**
@@ -67,4 +105,6 @@ class RedactionController extends Controller
     {
         //
     }
+
+
 }

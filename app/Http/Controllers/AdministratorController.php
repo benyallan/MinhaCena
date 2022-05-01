@@ -13,6 +13,22 @@ use Illuminate\Support\Facades\Validator;
 class AdministratorController extends Controller
 {
     /**
+     * Perform pre-authorization checks.
+     *
+     * @param  \App\Models\User  $user
+     * @param  string  $ability
+     * @return void|bool
+     */
+    public function before(User $user, $ability)
+    {
+        /*
+        if ($user->user_type == 'Administrator') {
+            return true;
+        }
+        */
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

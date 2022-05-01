@@ -28,7 +28,8 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'tag' => 'required|unique:tags'
+            'tag' => 'required|unique:tags',
+            'administrator_id' => 'required'
         ]);
 
         if($validator->fails()){

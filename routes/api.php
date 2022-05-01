@@ -48,7 +48,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('illustrators', IllustratorController::class)
         ->except(['store']);
     Route::apiResource('socialMedias', SocialMediaController::class);
-    Route::get('illustrators/{illustrator}/socialmedias', [IllustratorController::class, 'socialMedias']);
+    Route::get(
+        'illustrators/{illustrator}/socialmedias',
+        [IllustratorController::class, 'socialMedias']
+    );
+    Route::post(
+        'illustrators/assignRedaction',
+        [IllustratorController::class, 'assignRedaction']
+    );
 
     Route::apiResource('schools', SchoolController::class)
         ->except(['store']);

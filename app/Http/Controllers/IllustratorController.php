@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Illustrator;
 use App\Http\Resources\Illustrator as IllustratorResource;
 use App\Http\Resources\SocialMedias as SocialMediasResource;
+use App\Http\Resources\Redaction as ResourceRedaction;
+use App\Models\Redaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -141,5 +143,52 @@ class IllustratorController extends Controller
         return SocialMediasResource::collection($illustrator->socialMedias);
     }
 
+    /**
+     * .
+     *
+     * @param  \App\Models\Illustrator  $illustrator
+     * @return \Illuminate\Http\Response
+     */
+    public function assignRedaction(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'redaction_id' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+        $redaction = Redaction::find($request->redaction_id);
+        if (is_null($redaction)) {
+            return json_encode('Redação não existe!');
+        }
+        $redaction->illustrators()->attach($request->user()->thisUser());
+        return new ResourceRedaction($redaction);
+    }
 
+    /**
+     * .
+     *
+     * @param  \App\Models\Illustrator  $illustrator
+     * @return \Illuminate\Http\Response
+     */
+    public function unassignRedaction(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'redaction_id' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+        $redaction = Redaction::find($request->redaction_id);
+        if (is_null($redaction)) {
+            return json_encode('Redação não existe!');
+        }
+        $redaction->illustrators()->dettach($request->user()->thisUser());
+        return new ResourceRedaction($redaction);
+    }
+
+    public function deliveryIllustration()
+    {
+        # code...
+    }
 }

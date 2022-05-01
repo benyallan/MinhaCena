@@ -19,7 +19,7 @@ class CreateSchoolsTable extends Migration
                 ->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('contactPerson');
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
             $table->date('unlocked_at')->nullable();
